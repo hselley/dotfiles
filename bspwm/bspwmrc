@@ -1,0 +1,58 @@
+#! /bin/sh
+pgrep -x sxhkd > /dev/null || sxhkd -c ~/.config/sxhkd/sxhkdrc &
+xsetroot -cursor_name left_ptr &
+~/.config/polybar/launch.sh 
+nitrogen --restore &
+picom -f &						
+~/bin/bing.sh &
+#redshift-gtk &
+caffeine --activate &
+~/bin/pcloud &
+nm-applet &
+#variety &
+killall -q notify-osd &
+dunst ~/.config/dunst/dunstrc &
+exec /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
+exec xfce4-clipman &
+exec numlockx on &
+exec blueberry-tray &
+exec setxkbmap es &
+
+bspc monitor HDMI-1 -d I II III IV V VI VII VIII IX X
+bspc monitor HDMI-2 -d XI XII XIII XIV XV XVI XVII XVIII XIX XX
+
+sleep 3
+bspc config top_padding 	 22
+bspc config border_width         2
+bspc config window_gap           2
+bspc config split_ratio          0.5
+bspc config borderless_monocle   true
+bspc config ignore_ewmh_focus    true
+
+# Rules for specific apps in specific desktops
+bspc rule -a guvcview state=floating sticky=on
+bspc rule -a firefox desktop='^2'
+bspc rule -a Chromium desktop='^11'
+bspc rule -a Mailspring desktop='^3' 
+bspc rule -a Ferdi desktop='^4'
+bspc rule -a TelegramDesktop desktop='^4'
+bspc rule -a Google-chrome desktop='^5'
+#bspc rule -a Gimp desktop='^8' state=floating follow=on
+#bspc rule -a mplayer2 state=floating
+#bspc rule -a Kupfer.py focus=on
+#bspc rule -a Screenkey manage=off
+
+# Autostart applications
+firefox &
+chromium &
+ferdi & 
+telegram-desktop &
+mailspring &
+google-chrome-stable &
+plank &
+
+sleep 30
+# Un-rule specific apps for allowing to be oppened in another workspace
+bspc rule -r Chromium
+bspc rule -r firefox
+bspc rule -r Google-chrome 
